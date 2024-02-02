@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const port = 3000;
+const port = 4000;
 const { v4 } = require("uuid");
 const fs = require("fs");
 
@@ -18,17 +18,7 @@ const app = express();
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(express.urlencoded());
-app.use(express.static("public"));
-
-app.get("/api/products/bulk", async (req, res) => {
-  try {
-    const jsonData = await Data.findOne();
-
-    res.json(jsonData.data);
-  } catch (err) {
-    res.status(500).json({ message: "Error fetching data" });
-  }
-});
+app.use(express.static("dist"));
 
 function addData() {
   fs.readFile("data.json", "utf-8", (err, data) => {
@@ -42,9 +32,10 @@ function addData() {
       // price
       const price = Math.floor(Math.random() * 50) + 10;
       data.price = price.toString() + ".99";
+      data.url = "http://localhost:4000" + data.url;
       obj.data.push(data);
     });
-    data.save();
+    obj.save();
   });
 }
 
