@@ -15,6 +15,7 @@ export default function Landing() {
   const filterContainer = useRef();
   // fetching data and then setting fetched data
   useEffect(() => {
+    // fetch("https://shop.iusecookies64.xyz/api/products/bulk")
     fetch("https://shop.iusecookies64.xyz/api/products/bulk")
       .then((res) => res.json())
       .then((data) => {

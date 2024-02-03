@@ -20,6 +20,19 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.static("dist"));
 
+app.get("/api/products/bulk", async (req, res) => {
+  const obj = await Data.findOne();
+  res.json(obj.data);
+});
+
+async function deleteData() {
+  await Data.deleteMany();
+  const obj = await Data.find();
+  console.log(obj);
+}
+
+// deleteData();
+
 function addData() {
   fs.readFile("data.json", "utf-8", (err, data) => {
     if (err) {
@@ -32,14 +45,15 @@ function addData() {
       // price
       const price = Math.floor(Math.random() * 50) + 10;
       data.price = price.toString() + ".99";
-      data.url = "http://localhost:4000" + data.url;
+      // data.url = "http://localhost:4000" + data.url;
       obj.data.push(data);
     });
+    console.log(obj);
     obj.save();
   });
 }
 
-addData();
+// addData();
 
 app.listen(port, (err) => {
   if (err) {
