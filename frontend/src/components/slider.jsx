@@ -8,7 +8,7 @@ export default function Slider({ min, max, setMin, setMax }) {
   const container = useRef();
   const [leftPos, setLeftPos] = useState(12);
   const [rightPos, setRightPos] = useState(12);
-  const { maxPrice } = useRecoilValue(variableAtom);
+  const { maxPrice, minPrice } = useRecoilValue(variableAtom);
   function changePos(e) {
     if (activeLeft) {
       const rect = container.current.getBoundingClientRect();
@@ -16,7 +16,9 @@ export default function Slider({ min, max, setMin, setMax }) {
       if (x < 12) return;
       if (x + rightPos >= rect.width) return;
       setLeftPos(x);
-      setMin(Math.floor(((x - 12) / rect.width) * maxPrice));
+      setMin(
+        Math.floor(((x - 12) / rect.width) * (maxPrice - minPrice) + minPrice)
+      );
     }
     if (activeRight) {
       const rect = container.current.getBoundingClientRect();
@@ -25,7 +27,9 @@ export default function Slider({ min, max, setMin, setMax }) {
       if (rx <= 12) return;
       if (rx + leftPos >= rect.width) return;
       setRightPos(rx);
-      setMax(Math.ceil(((x + 12) / rect.width) * maxPrice));
+      setMax(
+        Math.ceil(((x + 12) / rect.width) * (maxPrice - minPrice) + minPrice)
+      );
     }
   }
 

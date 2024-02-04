@@ -47,7 +47,7 @@ export default function Landing() {
           <Filter setFilteredList={setFilteredList} />
         </div>
         {/* responsive filter list start */}
-        <div className="md:hidden">
+        <div className="md:hidden z-50">
           <div
             className="px-3 py-2 max-w-24 m-2 text-white bg-black cursor-pointer"
             onClick={() =>
